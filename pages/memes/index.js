@@ -8,7 +8,7 @@ export default function Memes ({memes}) {
     ))
     return (
         <>
-            <h1>Memy test changes</h1>
+            <h1>Memy test changes watch</h1>
             <ul>
                 {listElements}
             </ul>
