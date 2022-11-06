@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react'
-
 export default function Test ({tests}) {
     const listElements = tests.map(test => (
-        <li key={test.id}>
+        <li key={test._id}>
             {test.text}
         </li>
     ))
@@ -17,24 +15,20 @@ export default function Test ({tests}) {
     );
 }
 
-export const getServerSideProps = async () => {
-    const response = await fetch('http://127.0.0.1:3000/api/test');
-    const {success, data} = await response.json();
+export async function getServerSideProps() {
+    let res = await fetch("http://127.0.0.1:3000/api/test", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    if (!success) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false,
-            }
-        }
-    }
-
-    const { tests } = data;
-
+    let response = await res.json();
+  
     return {
-        props: {
-            tests
-        },
-    }
-}
+      props: {
+        tests: response.data
+      },
+    };
+  }
+  
